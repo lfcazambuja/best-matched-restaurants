@@ -53,7 +53,8 @@ public class RestaurantsFilter {
         if (!ObjectUtils.isEmpty(cuisine)) {
             predicates.add(findByCuisine);
         }
-        return predicates.stream().reduce(Predicate::and).orElseThrow(
-            () -> new ClientErrorException(ErrorType.VALIDATION, "Error defining filter."));
+        return predicates.stream()
+                        .reduce(Predicate::and)
+                        .orElseThrow(() -> new ClientErrorException(ErrorType.VALIDATION, "Error defining filter."));
     }
 }
