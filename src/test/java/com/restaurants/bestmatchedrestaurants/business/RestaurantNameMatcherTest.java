@@ -40,7 +40,7 @@ public class RestaurantNameMatcherTest {
     }
 
     @Test
-    public void shouldMatchNamesWhenRestaurantCuisineStartsWithParameterIgnoringCase() {
+    public void shouldMatchNamesWhenRestaurantCuisineContainsParameterIgnoringCase() {
         //given
         String restaurantName = "KFC";
         String parameterName = "KF";
@@ -53,7 +53,7 @@ public class RestaurantNameMatcherTest {
     }
 
     @Test
-    public void shouldNotMatchNamesWhenValuesAreDifferentAndRestaurantNameDoesNotStartWithParameter() {
+    public void shouldNotMatchNamesWhenValuesAreDifferentAndRestaurantNameDoesNotConstainParameter() {
         //given
         String restaurantName = "KFC";
         String parameterName = "Carmine's";

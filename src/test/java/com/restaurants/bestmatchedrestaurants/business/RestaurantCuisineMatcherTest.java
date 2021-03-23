@@ -40,7 +40,7 @@ public class RestaurantCuisineMatcherTest {
     }
 
     @Test
-    public void shouldMatchCuisinesWhenRestaurantCuisineStartsWithParameterIgnoringCase() {
+    public void shouldMatchCuisinesWhenRestaurantCuisineContainsParameterIgnoringCase() {
         //given
         String restaurantCuisine = "Chinese";
         String parameterCuisine = "chi";
@@ -53,7 +53,7 @@ public class RestaurantCuisineMatcherTest {
     }
 
     @Test
-    public void shouldNotMatchCuisinesWhenValuesAreDifferentAndRestaurantCuisineDoesNotStartWithParameter() {
+    public void shouldNotMatchCuisinesWhenValuesAreDifferentAndRestaurantCuisineDoesNotContainsParameter() {
         //given
         String restaurantCuisine = "Chinese";
         String parameterCuisine = "Portuguese";
