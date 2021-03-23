@@ -22,14 +22,17 @@ public class RequestParametersValidator {
         if (name != null && name.isBlank()) {
             throw new ClientErrorException(ErrorType.VALIDATION, "Restaurant name should not be empty.");
         }
-        if (customerRating != null && customerRating.intValue() < 0) {
-            throw new ClientErrorException(ErrorType.VALIDATION, "Customer rating should not be negative.");
+        if (customerRating != null && (customerRating.intValue() < 1 || customerRating.intValue() > 5)) {
+            throw new ClientErrorException(
+                ErrorType.VALIDATION, "Customer rating should be a number between 1 and 5 (inclusive).");
         }
-        if (distance != null && distance.intValue() < 0) {
-            throw new ClientErrorException(ErrorType.VALIDATION, "Distance rating should not be negative.");
+        if (distance != null && (distance.intValue() < 1 || distance.intValue() > 10)) {
+            throw new ClientErrorException(
+                ErrorType.VALIDATION, "Distance should be a number between 1 and 10 (inclusive).");
         }
-        if (price != null && price.compareTo(BigDecimal.ZERO) < 0) {
-            throw new ClientErrorException(ErrorType.VALIDATION, "Price must be a positive number.");
+        if (price != null && (price.compareTo(BigDecimal.valueOf(10)) < 0 || price.compareTo(BigDecimal.valueOf(50)) > 0)) {
+            throw new ClientErrorException(
+                ErrorType.VALIDATION, "Price should be a number between 10 and 50 (inclusive).");
         }
         if (cuisine != null && cuisine.isBlank()) {
             throw new ClientErrorException(ErrorType.VALIDATION, "Cuisine should not be empty.");
