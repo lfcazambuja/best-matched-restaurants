@@ -15,11 +15,10 @@ import java.util.function.Predicate;
 
 import com.restaurants.bestmatchedrestaurants.business.RestaurantsFilter;
 import com.restaurants.bestmatchedrestaurants.business.validator.RequestParametersValidator;
-import com.restaurants.bestmatchedrestaurants.data.DataRepository;
 import com.restaurants.bestmatchedrestaurants.data.RepositoryDataMapper;
+import com.restaurants.bestmatchedrestaurants.data.entity.RestaurantEntity;
+import com.restaurants.bestmatchedrestaurants.data.repository.RestaurantRepository;
 import com.restaurants.bestmatchedrestaurants.domain.RestaurantCuisine;
-import com.restaurants.bestmatchedrestaurants.model.Cuisine;
-import com.restaurants.bestmatchedrestaurants.model.Restaurant;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,15 +29,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class RestaurantsServiceTest {
 
-    @Mock private DataRepository repository;
+    @Mock private RestaurantRepository repository;
     @Mock private RequestParametersValidator validator;
     @Mock private RestaurantsFilter restaurantFilter;
     @Mock private RepositoryDataMapper dataMapper;
     @InjectMocks private RestaurantsService restaurantsService;
 
     @Mock private Predicate<RestaurantCuisine> predicate;
-    @Mock private Collection<Cuisine> cuisines;
-    @Mock private Collection<Restaurant> restaurants;
+    @Mock private Collection<RestaurantEntity> restaurants;
 
     @Test
     public void shouldLimitCollectionByFiveElements() {
@@ -47,10 +45,9 @@ public class RestaurantsServiceTest {
         doNothing().when(validator).validate(name, null, null, null, null);
         given(restaurantFilter.buildFilter(name, null, null, null, null)).willReturn(predicate);
         given(predicate.test(any(RestaurantCuisine.class))).willReturn(Boolean.TRUE);
-        given(repository.findAllCuisines()).willReturn(cuisines);
-        given(repository.findAllRestaurants()).willReturn(restaurants);
+        given(repository.findAll()).willReturn(restaurants);
         Collection<RestaurantCuisine> mockedRestaurants = restaurants(10);
-        given(dataMapper.map(cuisines, restaurants)).willReturn(mockedRestaurants);
+        given(dataMapper.map(restaurants)).willReturn(mockedRestaurants);
 
         //when
         Collection<RestaurantCuisine> response = restaurantsService.findRestaurants(name, null, null, null, null);
@@ -59,9 +56,8 @@ public class RestaurantsServiceTest {
         assertThat(response, hasSize(5));
         then(validator).should().validate(name, null, null, null, null);
         then(restaurantFilter).should().buildFilter(name, null, null, null, null);
-        then(repository).should().findAllCuisines();
-        then(repository).should().findAllRestaurants();
-        then(dataMapper).should().map(cuisines, restaurants);
+        then(repository).should().findAll();
+        then(dataMapper).should().map(restaurants);
     }
 
     @Test
@@ -71,11 +67,10 @@ public class RestaurantsServiceTest {
         doNothing().when(validator).validate(name, null, null, null, null);
         given(restaurantFilter.buildFilter(name, null, null, null, null)).willReturn(predicate);
         given(predicate.test(any(RestaurantCuisine.class))).willReturn(Boolean.TRUE);
-        given(repository.findAllCuisines()).willReturn(cuisines);
-        given(repository.findAllRestaurants()).willReturn(restaurants);
+        given(repository.findAll()).willReturn(restaurants);
         final int numberOfRestaurants = new Random().nextInt(5) + 1;
         Collection<RestaurantCuisine> mockedRestaurants = restaurants(numberOfRestaurants);
-        given(dataMapper.map(cuisines, restaurants)).willReturn(mockedRestaurants);
+        given(dataMapper.map(restaurants)).willReturn(mockedRestaurants);
 
         //when
         Collection<RestaurantCuisine> response = restaurantsService.findRestaurants(name, null, null, null, null);
@@ -84,9 +79,8 @@ public class RestaurantsServiceTest {
         assertThat(response, hasSize(numberOfRestaurants));
         then(validator).should().validate(name, null, null, null, null);
         then(restaurantFilter).should().buildFilter(name, null, null, null, null);
-        then(repository).should().findAllCuisines();
-        then(repository).should().findAllRestaurants();
-        then(dataMapper).should().map(cuisines, restaurants);
+        then(repository).should().findAll();
+        then(dataMapper).should().map(restaurants);
     }
 
     private Collection<RestaurantCuisine> restaurants(final int size) {
