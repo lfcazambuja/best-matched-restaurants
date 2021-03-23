@@ -57,7 +57,7 @@ public class RequestParametersValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenCustomerRatingIsInvalid() {
+    public void shouldThrowExceptionWhenCustomerRatingIsNegative() {
         //given
         Integer customerRating = Integer.valueOf(-new Random().nextInt(Integer.MAX_VALUE));
 
@@ -69,7 +69,19 @@ public class RequestParametersValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenDistanceIsInvalid() {
+    public void shouldThrowExceptionWhenCustomerRatingIsGreaterThanFive() {
+        //given
+        Integer customerRating = Integer.valueOf(new Random().nextInt(Integer.MAX_VALUE - 5) + 6);
+
+        //when
+        catchException(validator).validate(null, customerRating, null, null, null);
+
+        //then
+        assertThat(caughtException(), instanceOf(ClientErrorException.class));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenDistanceIsNegative() {
         //given
         Integer distance = Integer.valueOf(-new Random().nextInt(Integer.MAX_VALUE));
 
@@ -81,9 +93,45 @@ public class RequestParametersValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenPriceIsInvalid() {
+    public void shouldThrowExceptionWhenDistanceIsGreaterThanTen() {
+        //given
+        Integer distance = Integer.valueOf(new Random().nextInt(Integer.MAX_VALUE - 10) + 11);
+
+        //when
+        catchException(validator).validate(null, null, distance, null, null);
+
+        //then
+        assertThat(caughtException(), instanceOf(ClientErrorException.class));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenPriceIsNegative() {
         //given
         BigDecimal price = BigDecimal.valueOf(-new Random().nextInt(Integer.MAX_VALUE));
+
+        //when
+        catchException(validator).validate(null, null, null, price, null);
+
+        //then
+        assertThat(caughtException(), instanceOf(ClientErrorException.class));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenPriceIsGreaterThanFifty() {
+        //given
+        BigDecimal price = BigDecimal.valueOf(-new Random().nextInt(Integer.MAX_VALUE - 50) + 51);
+
+        //when
+        catchException(validator).validate(null, null, null, price, null);
+
+        //then
+        assertThat(caughtException(), instanceOf(ClientErrorException.class));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenPriceIsLessThanTen() {
+        //given
+        BigDecimal price = BigDecimal.valueOf(new Random().nextInt(10));
 
         //when
         catchException(validator).validate(null, null, null, price, null);
@@ -120,9 +168,9 @@ public class RequestParametersValidatorTest {
     public void shouldValidateParameters() {
         //given
         String name = "name";
-        Integer customerRating = Integer.valueOf(4);
-        Integer distance = Integer.valueOf(5);
-        BigDecimal price = BigDecimal.valueOf(15);
+        Integer customerRating = Integer.valueOf(new Random().nextInt(5) + 1);
+        Integer distance = Integer.valueOf(new Random().nextInt(10) + 1);
+        BigDecimal price = BigDecimal.valueOf(new Random().nextInt(40) + 10 + 1);
         String cuisine = "cuisine";
 
         //when
