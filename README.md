@@ -16,6 +16,8 @@ GET localhost:8080/restaurants
 
 As the data provided (and the relationship between them) is very simple, I didn't use a database to store the data (I thought about using mongodb or an in-memory database like H2, but discarded the idea, as you are focusing in my coding skills).
 
+For sorting purposes, I chose the **name of the restaurant** to be the last criteria, after the distance, customer rating, and price.
+
 I added a cache to the search function, again, very simple, provided by Spring Boot, where the key is based on the search parameters.
 
 
