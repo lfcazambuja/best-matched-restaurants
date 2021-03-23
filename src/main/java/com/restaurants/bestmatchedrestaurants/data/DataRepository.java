@@ -2,6 +2,7 @@ package com.restaurants.bestmatchedrestaurants.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class DataRepository implements Repository {
             try {
                 log.info("Loading restaurants data...");
                 final CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
-                final File restaurantsFile = new ClassPathResource("restaurants.csv").getFile();
+                final InputStream restaurantsFile = new ClassPathResource("restaurants.csv").getInputStream();
                 final MappingIterator<Restaurant> restaurantValues = getCsvMapper()
                                 .readerFor(Restaurant.class)
                                 .with(bootstrapSchema)
@@ -40,6 +41,7 @@ public class DataRepository implements Repository {
                 restaurants = List.copyOf(restaurantValues.readAll());
                 log.info("Loaded {} restaurants.", Integer.valueOf(restaurants.size()));
             } catch (IOException e) {
+                log.error("Error loading restaurants data.", e);
                 throw new ServerErrorException("Error loading restaurants data.", e);
             }
         }
@@ -52,7 +54,7 @@ public class DataRepository implements Repository {
             try {
                 log.info("Loading restaurants data...");
                 final CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
-                final File cuisinesFile = new ClassPathResource("cuisines.csv").getFile();
+                final InputStream cuisinesFile = new ClassPathResource("cuisines.csv").getInputStream();
                 final MappingIterator<Cuisine> cuisineValues = getCsvMapper()
                                 .readerFor(Cuisine.class)
                                 .with(bootstrapSchema)
@@ -61,6 +63,7 @@ public class DataRepository implements Repository {
                 cuisines = List.copyOf(cuisineValues.readAll());
                 log.info("Loaded {} cuisines.", Integer.valueOf(cuisines.size()));
             } catch (IOException e) {
+                log.error("Error loading cuisines data.", e);
                 throw new ServerErrorException("Error loading cuisines data.", e);
             }
         }

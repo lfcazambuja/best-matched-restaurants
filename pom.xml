@@ -56,6 +56,9 @@
             </resource>
             <resource>
                 <directory>src/data</directory>
+                <includes>
+                    <include>**/*.csv</include>
+                </includes>
             </resource>
         </resources>
 
