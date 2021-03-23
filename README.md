@@ -5,7 +5,7 @@ Best Matched Restaurants
 
 ### Solution
 
-My solution is stored in a github repo: https://github.com/lfcazambuja/best-matched-restaurants.
+My solution is stored in a github repo: 'https://github.com/lfcazambuja/best-matched-restaurants'.
 
 
 ### About My Solution
@@ -14,7 +14,7 @@ It is a Spring Boot application written in Java, exposing an HTTP endpoint that 
 
 GET localhost:8080/restaurants
 
-As the data provided (and the relationship between them) is very simple, I didn't use a database to store the data (I thought about using mongodb or an in-memory database like H2, but discarded the idea, as you are focusing in my coding skills).
+I used an in-memory database (H2) to store the data, reading it from the provided CSV files.
 
 For sorting purposes, I chose the **name of the restaurant** to be the last criteria, after the distance, customer rating, and price.
 
