@@ -40,11 +40,15 @@ All the parameters (**name**, **customerRating**, **distance**, **price**, and *
 The application requires **JAVA 11** and **Maven** to run.
 
 Go to the root folder and execute the following
+
 `mvn spring-boot:run`
 
 In order to test the application, please make the following request
+
 `curl --location --request GET 'localhost:8080/restaurants?customerRating=3&price=15'`
+
 Please note that it is an example, where I used **customer rating** and **price** as search criteria. You are free to play with the given parameters (again, **name**, **customerRating**, **distance**, **price**, and **cuisine**).
 
 Alternatively, you can also find a live version deployed at AWS:
+
 `curl --location --request GET 'http://bestmatchedrestaurants-env.eba-uwdpi2qz.sa-east-1.elasticbeanstalk.com/restaurants?customerRating=3&price=10'`
